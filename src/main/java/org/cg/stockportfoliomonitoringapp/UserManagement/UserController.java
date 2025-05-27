@@ -19,8 +19,13 @@ public class UserController {
         return ResponseEntity.ok(userServices.registerUser(user));
     }
 
-    @GetMapping("/login/{userName}")
-    public ResponseEntity<User> login(@Valid @PathVariable String userName) {
-        return ResponseEntity.ok(userServices.loginUser(userName));
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@Valid @RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(userServices.loginUser(loginRequest.getEmail(), loginRequest.getPassword()));
+    }
+
+    @PutMapping("/update/{email}")
+    public ResponseEntity<User> updateUser(@Valid @PathVariable String email, @Valid @RequestBody User user) {
+        return ResponseEntity.ok(userServices.updateUser(email,user));
     }
 }

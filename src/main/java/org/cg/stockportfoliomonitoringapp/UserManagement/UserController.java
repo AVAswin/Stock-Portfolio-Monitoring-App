@@ -20,8 +20,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok(userServices.loginUser(loginRequest.getEmail(), loginRequest.getPassword()));
+    public ResponseEntity<UserResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+        UserResponse response=userServices.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/update/{email}")

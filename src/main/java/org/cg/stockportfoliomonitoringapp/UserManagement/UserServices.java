@@ -1,5 +1,6 @@
 package org.cg.stockportfoliomonitoringapp.UserManagement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,15 +21,15 @@ public class UserServices {
         return userRepository.save(user);
     }
 
-    public String loginUser(String email,String password) {
+    public UserResponse loginUser(String email,String password) {
         if(!userRepository.existsByEmail(email)){
             throw new RuntimeException("email not found");
         }
         User user=userRepository.findByEmail(email);
         if(!user.getPassword().equals(password)){
-            return "Password incorrect";
+            return new UserResponse(HttpStatus.UNAUTHORIZED, user.getUserId(), "Password incorrect");
         }
-        return "Logged in";
+        return new UserResponse(HttpStatus.OK, user.getUserId(), "Logged in successfully");
     }
 
     public User updateUser(String email,User user) {

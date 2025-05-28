@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class LoginRequest {
+public class LoginRequestDTO {
     @NotEmpty(message = "Email cannot be null")
     @Column(unique = true, nullable = false)
     @Pattern(

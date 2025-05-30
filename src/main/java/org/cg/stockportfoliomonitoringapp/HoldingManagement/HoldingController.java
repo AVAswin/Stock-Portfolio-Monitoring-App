@@ -1,3 +1,4 @@
+// src/main/java/org/cg/stockportfoliomonitoringapp/holding/controller/HoldingController.java
 package org.cg.stockportfoliomonitoringapp.HoldingManagement;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,15 +19,16 @@ public class HoldingController {
 
     private final HoldingService holdingService;
 
+
     @PostMapping("/{userId}")
     public ResponseEntity<?> addHolding(
             @PathVariable Long userId,
-            @RequestBody HoldingUpdateRequest request) { 
+            @RequestBody HoldingUpdateRequest request) { // Use the updated DTO
         try {
             HoldingGainDetailsResponse response = holdingService.addHolding(
                     userId,
                     request.getStockSymbol(),
-                    request.getStockName(), 
+                    request.getStockName(), // Pass stockName from the request
                     request.getQuantity(),
                     request.getBuyPrice()
             );
@@ -36,22 +38,24 @@ public class HoldingController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (RuntimeException e) {
-   
+            // Catches general runtime errors, including API connection issues
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Service temporarily unavailable: " + e.getMessage());
         } catch (Exception e) {
+            // Catch any other unexpected errors
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
         }
     }
 
+
     @PutMapping("/{userId}")
     public ResponseEntity<?> updateHolding(
             @PathVariable Long userId,
-            @RequestBody HoldingUpdateRequest request) { 
+            @RequestBody HoldingUpdateRequest request) { // Use the updated DTO
         try {
             HoldingGainDetailsResponse response = holdingService.updateHolding(
                     userId,
                     request.getStockSymbol(),
-                    request.getStockName(), 
+                    request.getStockName(), // Pass stockName from the request
                     request.getQuantity(),
                     request.getBuyPrice()
             );
@@ -66,6 +70,7 @@ public class HoldingController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
         }
     }
+
 
     @DeleteMapping("/{userId}/{stockSymbol}")
     public ResponseEntity<String> deleteHolding(
@@ -83,6 +88,7 @@ public class HoldingController {
         }
     }
 
+
     @GetMapping("/{userId}")
     public ResponseEntity<?> getHoldingsForUser(@PathVariable Long userId) {
         try {
@@ -97,7 +103,6 @@ public class HoldingController {
         }
     }
 
- 
     @GetMapping("/stocks/all")
     public ResponseEntity<?> getAllStockDetails() {
         try {

@@ -18,8 +18,8 @@ public class Holding {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = true) 
-    private Long stockId;    
+    @Column(nullable = true)
+    private Long stockId;
 
     @Column(nullable = false)
     private String stockSymbol;
@@ -27,7 +27,7 @@ public class Holding {
     @Column(nullable = false)
     private String stockName;
 
-    private String sector; //
+    private String sector;
 
     @Column(nullable = false)
     private Integer quantity;

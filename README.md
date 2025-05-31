@@ -33,7 +33,7 @@ A backend system to manage and monitor users' stock portfolios, receive real-tim
   - Portfolio loss exceeds Y%
 - Notification system: Email / DB log (pluggable architecture)
 
-### 5. Gain/Loss Calculator
+### 5. Gain/Loss Calculator     
 - Calculate:
   - Per-stock gain/loss (absolute and %)
   - Total portfolio gain/loss
@@ -58,12 +58,12 @@ A backend system to manage and monitor users' stock portfolios, receive real-tim
 ### Price Fetch Job (Scheduled)
 1. Retrieve unique stock symbols from holdings
 2. Call external API to fetch latest prices
-3. Update stock price cache
+3. Update stock price cache   
 
-### Gain/Loss Calculation
-```java
-gain = (currentPrice - buyPrice) * quantity;
-percentage = (gain / (buyPrice * quantity)) * 100;
+### Gain/Loss Calculation  
+
+1. gain = (currentPrice - buyPrice) * quantity;
+2. percentage = (gain / (buyPrice * quantity)) * 100;
 
 ### Alerts Evaluation
 1. Compares current stock price against user-defined conditions

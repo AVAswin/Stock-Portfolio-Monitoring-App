@@ -87,22 +87,21 @@ percentage = (gain / (buyPrice * quantity)) * 100;
 
 
 ### PortfolioController
-- `GET /api/portfolios` – View all portfolios  
-- `POST /api/portfolios` – Create new portfolio  
-- `GET /api/portfolios/{id}/holdings` – Get holdings for a portfolio  
+- `POST /portfolio/{userId}` – Add portfolio for a particular user 
+- `GET /portfolio/user/{userId}` – View all portfolios of a particular user
 
 
 ### HoldingsController
-- `POST /api/holdings` – Add new stock  
-- `PUT /api/holdings/{id}` – Update stock info  
-- `DELETE /api/holdings/{id}` – Remove a stock  
-
+- `POST /holdings` – Add new stock  
+- `PUT /holdings/{userId}` – Update stock info  
+- `DELETE /holdings//{userId}/{stockSymbol}` – Remove a stock  
+- `GET /holdings/{userId}` - View all holdings of a particular user
+- `GET /holdings/stocks/all` - View all stocks
 
 ### AlertsController
-- `POST /api/alerts` – Set up an alert  
-- `GET /api/alerts` – View all alerts  
-- `PUT /api/alerts/{id}` – Update alert   
-
+- `GET /alerts` - Get alert
+- `POST /alerts` - Add alert
+- `GET /alerts/{userId}` - Get alerts by userId
 
 ## Example Entity Overview
 
@@ -113,7 +112,6 @@ percentage = (gain / (buyPrice * quantity)) * 100;
 - `password`: String  
 - `role`: String  
 
----
 
 ### Portfolio
 - `id`: Long  
@@ -121,7 +119,6 @@ percentage = (gain / (buyPrice * quantity)) * 100;
 - `name`: String  
 - `createdDate`: Date  
 
----
 
 ### Holding
 - `id`: Long  
@@ -130,7 +127,6 @@ percentage = (gain / (buyPrice * quantity)) * 100;
 - `quantity`: Integer  
 - `buyPrice`: Double  
 
----
 
 ### Alert
 - `id`: Long  
@@ -140,6 +136,6 @@ percentage = (gain / (buyPrice * quantity)) * 100;
 - `threshold`: Double  
 - `isActive`: Boolean  
 
----
+
 
 

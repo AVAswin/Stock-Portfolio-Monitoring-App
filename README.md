@@ -1,138 +1,196 @@
-# Stock Portfolio Monitoring App (Spring Boot Backend)
+# ✅ Stock Portfolio Monitoring App (Spring Boot Backend)
 
-A backend system to manage and monitor users' stock portfolios, receive real-time updates, calculate gains/losses, and trigger alerts based on custom conditions.
-
----
-
-## Objective
-
-- Manage user stock holdings
-- Set price and portfolio loss alerts
-- Fetch real-time stock prices via external APIs
-- Calculate individual and total portfolio gains/losses
+This project is a backend system for managing and monitoring stock investments. It allows users to manage portfolios, track real-time stock prices (from a database), calculate gains/losses, set alerts, and generate reports.
 
 ---
 
-## Core Modules
+## 🎯 Objective
 
-### 1. User Management
-- Register/Login
+To build a secure and efficient backend platform where users can:
 
-### 2. Portfolio Module
-- Create and manage portfolios
-- Add/Edit/Delete holdings (symbol, quantity, buy price)
-- View real-time value and gain/loss
-
-### 3. Real-Time Price Fetcher
-- Scheduled jobs or REST trigger to fetch current prices
-- Cache recent prices
-
-### 4. Alerting Module
-- Alerts for:
-  - Stock price crosses X
-  - Portfolio loss exceeds Y%
-- Notification system: Email / DB log (pluggable architecture)
-
-### 5. Gain/Loss Calculator     
-- Calculate:
-  - Per-stock gain/loss (absolute and %)
-  - Total portfolio gain/loss
+- ✅ Upload and manage stock holdings  
+- ✅ Receive alerts for custom price thresholds or portfolio losses  
+- ✅ View real-time stock prices (via static API)  
+- ✅ Track gains/losses for each holding and overall portfolio  
 
 ---
 
-## Tech Stack
+## 📁 Core Modules
 
-| Layer        | Technology                               |
-|--------------|-------------------------------------------|
-| Language     | Java                                      |
-| Framework    | Spring Boot, Spring Security, Spring Data JPA |
-| Database     | MySQL                                     |
-| Scheduler    | Spring Scheduler / Quartz                 |
-| REST Client  | RestTemplate                              |
-| Build Tool   | Maven                                     |
+### ✅ 1. User Management Module
+- User registration  
+- User login  
+
+### ✅ 2. Portfolio Module
+- Create and manage multiple portfolios  
+- Add/edit/delete stock holdings (symbol, quantity, buy price)  
+
+### ✅ 3. Real-Time Price Fetcher
+- Integrates with external static stock API  
+- Scheduled or manual fetching of latest prices  
+
+### ✅ 4. Alerting Module
+Users can set alerts for:
+- Stock price crossing a threshold  
+- Portfolio loss exceeding a set percentage  
+- Modular notification system (database logs)  
+
+### ✅ 5. Gain/Loss Calculator
+Calculates:
+- Per-stock gain/loss (absolute and percentage)  
+- Total portfolio performance  
 
 ---
 
-## Business Logic Flow
+## ⚙️ Tech Stack
 
-### Price Fetch Job (Scheduled)
-1. Retrieve unique stock symbols from holdings
-2. Call external API to fetch latest prices
-3. Update stock price cache   
+| Layer         | Technology                        |
+|---------------|-----------------------------------|
+| Language       | Java                              |
+| Framework      | Spring Boot, Spring Data JPA, Spring Security |
+| Database       | MySQL                             |
+| Scheduling     | Spring Scheduler / Quartz         |
+| REST Client    | RestTemplate                      |
+| JSON Mapper    | Jackson                           |
+| Build Tool     | Maven                             |
+| Testing        | JUnit, Mockito                    |
 
-### Gain/Loss Calculation  
+---
 
-1. gain = (currentPrice - buyPrice) * quantity;
-2. percentage = (gain / (buyPrice * quantity)) * 100;
+## 🧠 Business Logic Flow
 
-### Alerts Evaluation
-1. Compares current stock price against user-defined conditions
-2. If triggered, make alert as active
+### ✔ Price Fetch Job
+Runs on schedule (every 5 minutes)
 
-## Testing Plan
+**Steps:**
+- Retrieve all stock symbols in use  
+- Call third-party API to fetch prices  
+- Save to DB for access  
 
-| Type              | Tool            | Focus Areas                                      |
-|-------------------|------------------|--------------------------------------------------|
-| **Unit Testing**   | JUnit, Mockito   | Controllers, Services, Utility classes           |
-| **Integration Test** | Spring Boot      | REST APIs, Authentication flow, DB interactions |
-| **Mock Testing**   | Mockito          | External API mocks (e.g., stock price services)  |
-| **Alert Testing**  | Custom           | Price-based alerts, Portfolio loss triggers      |
+### ✔ Gain/Loss Calculation
+For each holding:
 
-## Sample API Endpoints
+gain = (currentPrice - buyPrice) * quantity  
+percentageGain = (gain / (buyPrice * quantity)) * 100
 
-### AuthController
+## ✔️ Alert Evaluation
+
+Compares current stock price against user-defined conditions.
+
+- ✅ If triggered: Adds into DB and logs alert to console.
+
+---
+
+## 🧪 Testing Plan
+
+| Type          | Tool           | Focus Areas                                 |
+|---------------|----------------|---------------------------------------------|
+| Unit Testing  | JUnit, Mockito | Controllers, Services, Utils                |
+| Spring Boot   | Built-in       | REST APIs, DB interactions                  |
+| Mock Testing  | Mockito        | External API (stock price) mocks            |
+| Alert Testing | Custom/Unit    | Alert triggers, logging                     |
+
+---
+
+## 📤 Sample API Endpoints
+
+### 🔐 AuthController
 - `POST /user/signup` – User registration  
 - `POST /user/login` – Authentication
 - `PUT /user/update/{email}` - Update username or password
 
-
-### PortfolioController
+### 📦 PortfolioController
 - `POST /portfolio/{userId}` – Add portfolio for a particular user 
 - `GET /portfolio/user/{userId}` – View all portfolios of a particular user
 
-
-### HoldingsController
+### 📈 HoldingsController
 - `POST /holdings` – Add new stock  
 - `PUT /holdings/{userId}` – Update stock info  
 - `DELETE /holdings//{userId}/{stockSymbol}` – Remove a stock  
 - `GET /holdings/{userId}` - View all holdings of a particular user
 - `GET /holdings/stocks/all` - View all stocks
 
-### AlertsController
+### 🔔 AlertsController
 - `GET /alerts` - Get alert
 - `POST /alerts` - Add alert
 - `GET /alerts/{userId}` - Get alerts by userId
 
-## Entity Overview
 
-### User
-- `id`: Long  
-- `username`: String  
-- `email`: String  
-- `password`: String   
+---
+```
+## 🗂 Project Structure
+Stock-Portfolio-Monitoring-App/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/example/stockPortfolio/
+│   │   │       ├── StockPortfolioApplication.java       # Main Spring Boot Application
+│   │   │       ├── AlertManagement/                    # Manages stock alerts
+│   │   │       ├── ExceptionManagement/                # Global exception handling
+│   │   │       ├── HoldingsManagement/                 # Stock holdings and transactions
+│   │   │       ├── PortfolioManagement/                # Portfolio management
+│   │   │       └── UserManagement/                     # User operations (auth, registration)
+│   └── resources/
+│       └── application.properties                      # App configuration
+│
+└── test/
+    └── java/
+        └── com/example/stockPortfolio/
+            ├── AlertManagement/                   # Alert module tests
+            ├── HoldingsManagement/                # Holdings module tests
+            ├── PortfolioManagement/               # Portfolio module tests
+            └── UserManagement/                    # User module tests
+
+---
+```
+
+## ▶️ How to Run the Project
+
+### 🛠 Prerequisites
+
+- Java 17+  
+- Maven  
+- MySQL  
+- Postman or Swagger UI (for testing)
+
+### 🚀 Setup Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/AVAswin/Stock-Portfolio-Monitoring-App.git
+   cd Stock-Portfolio-Monitoring-App
+2. Create MySQL Database:
+    CREATE DATABASE stockdb;
+3. Edit application.properties
+    # Example DB Config
+    spring.datasource.url=jdbc:mysql://localhost:3306/stockdb
+    spring.datasource.username=root
+    spring.datasource.password=root
+    
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+    
+    springdoc.api-docs.path=/v3/api-docs
+    springdoc.swagger-ui.path=/swagger-ui.html
+4.  Build and Run the Project
+    ./mvnw clean install
+    ./mvnw spring-boot:run
+5.  Access API Documentation
+    Visit: http://localhost:8080/swagger-ui/index.html
+
+| Name                   | Role & Contributions                     |
+| ---------------------- | ---------------------------------------- |
+| **A.V. Aswin**         | Project Lead, Contributed to all modules |
+| **Aman Yadav**         | Contributed to all modules               |
+| **A Fazil Mohammad**   | Contributed to all modules               |
+| **Harshitha**          | Contributed to all modules               |
+| **Siddharta Banerjee** | Contributed to all modules               |
 
 
-### Portfolio
-- `id`: Long  
-- `userId`: Long  
-- `name`: String  
 
 
-### Holding
-- `id`: Long  
-- `userId`: Long  
-- `symbol`: String  
-- `quantity`: Integer  
-- `buyPrice`: Double
-- `currentPrice`: Double
 
-
-### Alert
-- `id`: Long  
-- `userId`: Long  
-- `symbol`: String  
-- `targetPrice`: String  
-- `gainOrLoss`: String  
 
 
 

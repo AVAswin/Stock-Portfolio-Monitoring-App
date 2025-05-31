@@ -103,38 +103,36 @@ percentage = (gain / (buyPrice * quantity)) * 100;
 - `POST /alerts` - Add alert
 - `GET /alerts/{userId}` - Get alerts by userId
 
-## Example Entity Overview
+## Entity Overview
 
 ### User
 - `id`: Long  
 - `username`: String  
 - `email`: String  
-- `password`: String  
-- `role`: String  
+- `password`: String   
 
 
 ### Portfolio
 - `id`: Long  
 - `userId`: Long  
 - `name`: String  
-- `createdDate`: Date  
 
 
 ### Holding
 - `id`: Long  
-- `portfolioId`: Long  
+- `userId`: Long  
 - `symbol`: String  
 - `quantity`: Integer  
-- `buyPrice`: Double  
+- `buyPrice`: Double
+- `currentPrice`: Double
 
 
 ### Alert
 - `id`: Long  
 - `userId`: Long  
 - `symbol`: String  
-- `condition`: String (e.g., `>`, `<`)  
-- `threshold`: Double  
-- `isActive`: Boolean  
+- `targetPrice`: String  
+- `gainOrLoss`: String  
 
 
 

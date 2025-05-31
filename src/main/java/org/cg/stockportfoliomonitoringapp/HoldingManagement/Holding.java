@@ -38,21 +38,4 @@ public class Holding {
     @Transient
     private Double currentPrice;
 
-    public Double calculateGain(Double currentPrice) {
-        if (currentPrice == null || buyPrice == null || quantity == null) {
-            return 0.0;
-        }
-        return (currentPrice - buyPrice) * quantity;
-    }
-
-    public Double calculateGainPercent(Double currentPrice) {
-        if (currentPrice == null || buyPrice == null || quantity == null || buyPrice == 0.0) {
-            return 0.0;
-        }
-        Double totalBuyValue = buyPrice * quantity;
-        if (totalBuyValue == 0.0) {
-            return 0.0;
-        }
-        return (calculateGain(currentPrice) / totalBuyValue) * 100.0;
-    }
 }

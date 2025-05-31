@@ -13,4 +13,5 @@ public class UserResponseDTO {
     private int statusCode;
     private long userId;
     private String message;
+
 }
